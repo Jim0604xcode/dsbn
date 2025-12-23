@@ -1,0 +1,8 @@
+#Upgrade
+1. Upload .env
+2. docker run --env-file .env.prod -d -p 8000:8000 --memory=7g --memory-reservation=6.5g xxxxxx
+
+
+#Downgrade
+1. Update old .env version
+2. docker run --env-file .env.prod -d -p 8000:8000 --memory=7g --memory-reservation=6.5g xxxxxx

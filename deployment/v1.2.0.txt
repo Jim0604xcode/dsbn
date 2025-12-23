@@ -1,0 +1,6 @@
+#Upgrade
+1. image id: 1755141781
+2. docker run --env-file .env.prod -d -p 8000:8000 --memory=7g --memory-reservation=6.5g xxxxxx
+
+#Downgrade
+1.  docker run --env-file .env.prod -d -p 8000:8000 --memory=7g --memory-reservation=6.5g 669b2884bc79

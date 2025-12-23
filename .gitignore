@@ -1,0 +1,11 @@
+.venv
+.DS_Store
+__pycache__/
+z_tur
+tests
+src/token.py
+src/transaction_old.py
+.vscode
+
+env/*
+templates

@@ -1,0 +1,46 @@
+#Upgrade
+1.  
+CREATE TABLE replies_master (
+  `id` INT PRIMARY KEY AUTO_INCREMENT,
+  `post_master_id` INT NOT NULL, -- The original post this reply belongs to
+  `user_id` char(36) NOT NULL, -- The user who made the reply
+  `parent_reply_master_id` INT, -- NULL for direct replies to the original post, otherwise points to the reply it's responding to
+  `content` TEXT NOT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` BOOLEAN DEFAULT FALSE,
+  FOREIGN KEY (post_master_id) REFERENCES posts_master(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (parent_reply_master_id) REFERENCES replies_master(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ENCRYPTION='Y'
+;
+2. Add 10 api into api gateway
+/posts/manage_user_group [POST request]
+/posts/removeV2/permissions_group/[group_id]/members/[full_phone_number] [DELETE request]
+/replies/create/life_moment [POST request]
+/replies/create/life_trajectory [POST request] 
+/replies/create/message_to_you [POST request]
+/posts/replies/life_moment/[id] [GET request]
+/posts/replies/life_trajectory/[id] [GET request]
+/posts/replies/message_to_you/[id] [GET request]
+/replies/[id] [PUT request]
+/replies[id] [DELETE request]
+
+
+3. docker run --env-file .env.prod -d -p 8000:8000 --memory=7g --memory-reservation=6.5g e86bc8849615
+
+#Downgrade
+1. drop table if exists `replies_master`;
+2. Remove 10 api into api gateway
+/posts/manage_user_group [POST request]
+/posts/removeV2/permissions_group/[group_id]/members/[full_phone_number] [DELETE request]
+/replies/create/life_moment [POST request]
+/replies/create/life_trajectory [POST request] 
+/replies/create/message_to_you [POST request]
+/posts/replies/life_moment/[id] [GET request]
+/posts/replies/life_trajectory/[id] [GET request]
+/posts/replies/message_to_you/[id] [GET request]
+/replies/[id] [PUT request]
+/replies[id] [DELETE request]
+
+3. docker run --env-file .env.prod -d -p 8000:8000 --memory=7g --memory-reservation=6.5g bf8b4e2c1c07

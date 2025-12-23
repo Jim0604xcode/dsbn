@@ -1,0 +1,29 @@
+## Upgrade
+# add ai related column into post_master table
+ALTER TABLE posts_master ADD COLUMN ai_feedback_content TEXT NULL;
+ALTER TABLE posts_master ADD COLUMN ai_feedback_status ENUM('NA', 'ALLOWED', 'COMPLETED', 'ERROR_SAFEGUARD', 'ERROR_MASKING', 'ERROR_AI_FEEDBACK', 'ERROR_OTHER') DEFAULT 'NA';
+ALTER TABLE posts_master ADD COLUMN ai_feedback_count INT NOT NULL DEFAULT 0;
+-- add a new column ai_feedback_hotline boolean value, with default value false
+ALTER TABLE posts_master ADD COLUMN ai_feedback_hotline BOOLEAN NULL DEFAULT FALSE;
+ALTER TABLE posts_master ADD COLUMN ai_feedback_lang ENUM('en', 'sc', 'tc', 'other') NULL;
+
+# add openai module for using alicloud ai model
+pip install -r requirements/dev.txt
+
+## new API
+
+# GET request /ai_feedback/generate_ai_feedback/life_moment/{post_id} 
+Purpose: To generate the AI feedback of a life moment post
+
+# GET /posts/get/shared_with_me/life_moments/{life_moment_post_id}
+Purpose: Get a single shared life moment post by ID that the user has permission to read
+
+# GET /posts/get/shared_with_me/msg_to_me/{message_to_you_post_id},
+Purpose: Get a single shared message to you post by ID that the user has permission to read and has passed the when_can_read_the_post time check
+
+## Downgrade
+ALTER TABLE posts_master DROP COLUMN ai_feedback_content;
+ALTER TABLE posts_master DROP COLUMN ai_feedback_status;
+ALTER TABLE posts_master DROP COLUMN ai_feedback_count;
+ALTER TABLE posts_master DROP COLUMN ai_feedback_hotline;
+ALTER TABLE posts_master DROP COLUMN ai_feedback_lang;

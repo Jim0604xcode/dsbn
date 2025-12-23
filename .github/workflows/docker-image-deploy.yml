@@ -1,0 +1,51 @@
+name: Deploy Docker Image to ACR
+
+on:
+  push:
+    branches: ["uat", "prod", "test"] # test is for testing
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set ACR variables for uat
+        if: github.ref == 'refs/heads/uat'
+        run: |
+          echo "ACR_USERNAME=${{ secrets.ACR_REGISTRY_USERNAME }}" >> $GITHUB_ENV
+          echo "ACR_PASSWORD=${{ secrets.ACR_REGISTRY_PW }}" >> $GITHUB_ENV
+          echo "ACR_REPOSITORY_URL=${{ secrets.ACR_REPOSITORY_URL }}" >> $GITHUB_ENV
+
+      - name: Set ACR variables for prod
+        if: github.ref == 'refs/heads/prod'
+        run: |
+          echo "ACR_USERNAME=${{ secrets.PROD_ACR_REGISTRY_USERNAME }}" >> $GITHUB_ENV
+          echo "ACR_PASSWORD=${{ secrets.PROD_ACR_REGISTRY_PW }}" >> $GITHUB_ENV
+          echo "ACR_REPOSITORY_URL=${{ secrets.PROD_ACR_REPOSITORY_URL }}" >> $GITHUB_ENV
+
+      - name: Set ACR variables for test
+        if: github.ref == 'refs/heads/test'
+        run: |
+          echo "ACR_USERNAME=${{ secrets.PROD_ACR_REGISTRY_USERNAME }}" >> $GITHUB_ENV
+          echo "ACR_PASSWORD=${{ secrets.PROD_ACR_REGISTRY_PW }}" >> $GITHUB_ENV
+          echo "ACR_REPOSITORY_URL=${{ secrets.PROD_ACR_REPOSITORY_URL }}" >> $GITHUB_ENV
+
+      - name: Login to ACR
+        uses: aliyun/acr-login@v1
+        with:
+          login-server: https://${{env.ACR_REPOSITORY_URL}}
+          username: ${{ env.ACR_USERNAME }}
+          password: ${{ env.ACR_PASSWORD }}
+
+      - name: Generate timestamp
+        id: timestamp
+        run: echo "TIMESTAMP=$(date +%s)" >> $GITHUB_ENV
+
+      - name: Build the Docker image
+        run: docker build --platform linux/amd64 -t ${{ env.ACR_REPOSITORY_URL }}:${{ env.TIMESTAMP }} .
+
+      - name: Push the Docker image to ACR
+        run: docker push ${{ env.ACR_REPOSITORY_URL }}:${{ env.TIMESTAMP }}

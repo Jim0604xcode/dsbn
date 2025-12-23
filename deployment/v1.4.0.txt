@@ -1,0 +1,7 @@
+#Upgrade
+1. ALTER TABLE `posts_permissions_group_members` MODIFY COLUMN `user_id` char(36) NULL;
+2. docker run --env-file .env.prod -d -p 8000:8000 --memory=7g --memory-reservation=6.5g e86bc8849615
+
+#Downgrade
+1.  ALTER TABLE `posts_permissions_group_members` MODIFY COLUMN `user_id` char(36) NOT NULL;
+2. docker run --env-file .env.prod -d -p 8000:8000 --memory=7g --memory-reservation=6.5g bf8b4e2c1c07

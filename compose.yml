@@ -1,0 +1,21 @@
+version: "1"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ENV=${ENV}
+    env_file:
+      - env/.env.${ENV}
+    ports:
+      - "8000:8000"
+    command: uvicorn src.main:app --host 0.0.0.0 --reload
+    volumes:
+      - .:/app
+    deploy:
+      resources:
+        limits:
+          memory: 2G # set to at least 2GB
+      # - /path/to/remote/google:/app/path/to/remote/google

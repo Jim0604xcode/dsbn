@@ -1,0 +1,43 @@
+{
+    "status": 0,
+    "environment": "Sandbox",
+    "receipt": {
+      "bundle_id": "com.example.app",
+      "application_version": "1.0.1",
+      "original_application_version": "1.0",
+      "in_app": [
+        {
+          "product_id": "com.example.unlock",
+          "transaction_id": "1000001234567890",
+          "original_transaction_id": "1000001234567890",
+          "purchase_date_ms": "1698765432000",
+          "purchase_date": "2023-10-31 12:37:12 Etc/GMT",
+          "quantity": "1"
+        }
+      ]
+    },
+    "latest_receipt": "base64_encoded_receipt_data",
+    "latest_receipt_info": [
+      {
+        "product_id": "com.example.premium_sub",
+        "transaction_id": "1000001234567891",
+        "original_transaction_id": "1000001234567890",
+        "purchase_date_ms": "1698765432000",
+        "purchase_date": "2023-10-31 12:37:12 Etc/GMT",
+        "expires_date_ms": "1701357432000",
+        "expires_date": "2023-11-30 12:37:12 Etc/GMT",
+        "quantity": "1",
+        "is_trial_period": "false",
+        "is_in_billing_retry_period": "0",
+        "subscription_group_identifier": "12345678"
+      }
+    ],
+    "pending_renewal_info": [
+      {
+        "auto_renew_status": "1",
+        "product_id": "com.example.premium_sub",
+        "original_transaction_id": "1000001234567890",
+        "expiration_intent": null
+      }
+    ]
+  }

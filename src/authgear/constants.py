@@ -1,0 +1,1 @@
+API_AUTHGEAR_GET_PRE_SIGNED_URL = "/_api/admin/images/upload"

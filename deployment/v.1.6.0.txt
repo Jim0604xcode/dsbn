@@ -1,0 +1,5 @@
+#Upgrade
+1. docker run --env-file .env.prod -d -p 8000:8000 --memory=7g --memory-reservation=6.5g bf8b4e2c1c07
+
+#Downgrade
+1. docker run --env-file .env.prod -d -p 8000:8000 --memory=7g --memory-reservation=6.5g bf8b4e2c1c07

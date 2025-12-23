@@ -1,0 +1,11 @@
+{
+  "kind": "androidpublisher#productPurchase",
+  "productId": "com.example.unlock_feature",
+  "purchaseTimeMillis": "1698765432000",
+  "purchaseState": 0,
+  "consumptionState": 0,
+  "developerPayload": "",
+  "orderId": "GPA.1234-5678-9012-34567",
+  "purchaseType": 0,
+  "acknowledgementState": 1
+}
